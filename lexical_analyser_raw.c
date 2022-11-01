@@ -24,9 +24,13 @@ char *substr(char *string, int start, int end) {
 
 int main() {
     printf("Lexical analyser!\n");
-    char *input = "c=a+b+60;";
+    char *input = "int 8ab;";
     int length = strlen(input);
     int l = 0, r = 0;
+    if (input[0] == '/' && input[1] == '/') {
+        printf("\nCOMMENT LINE\n");
+        exit(1);
+    }
     while (r <= length && l <= r) {
         if (!is_delimeter(input[r])) r++;
         else if (is_delimeter(input[r]) && l == r) {
@@ -35,8 +39,8 @@ int main() {
             r++;
         } else {
 
-            if(r-l != 1)
-            printf("<%s,'%s'>\n", substr(input, l, r), get_info_str(substr(input, l, r)));
+            if (r - l != 1)
+                printf("<%s,'%s'>\n", substr(input, l, r), get_info_str(substr(input, l, r)));
             l = r;
         }
     }
@@ -44,15 +48,20 @@ int main() {
 }
 
 char *get_info_str(char *substr) {
-    if((substr[0]>=65 && substr[0]<=90) || (substr[0]>=97 && substr[0]<=122))
+    if ((substr[0] >= 65 && substr[0] <= 90) || (substr[0] >= 97 && substr[0] <= 122)) {
+        for (int i = 0; i <= strlen(substr); i++) {
+            if (((substr[0] >= 65 && substr[0] <= 90) || (substr[0] >= 97 && substr[0] <= 122))) {
+
+            }
+        }
         return "Identifier";
-    else{
+    } else {
         return "Number";
     }
 }
 
 char *get_info(char i) {
-    if (i=='+' || i=='-' || i=='*'||i=='/' ||i=='%' || i== '=')
+    if (i == '+' || i == '-' || i == '*' || i == '/' || i == '%' || i == '=')
         return "Operator";
     else
         return "Separator";
